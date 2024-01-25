@@ -10,3 +10,5 @@ export default {
   layout: 'hr-dashboard-layout',
 }
 </script>
+
+<style scoped></style>

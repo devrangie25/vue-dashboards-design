@@ -1,10 +1,10 @@
 <template>
   <v-app id="app-container">
-    <v-navigation-drawer color="#fefefe" permanent app>
+    <v-navigation-drawer color="#fefefe" :permanent="['large', 'extra-large'].includes(width)" app v-model="drawer">
       <v-list>
         <v-list-item three-line class="text-center">
           <v-list-item-content>
-            <v-list-item-title class="brand"> imposization </v-list-item-title>
+            <v-list-item-title class="brand"> motivation </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item-group v-model="nav">
@@ -71,6 +71,7 @@
       flat
       absolute
     >
+      <v-app-bar-nav-icon v-if="!['large', 'extra-large'].includes(width)" @click="onClickNavIcon"></v-app-bar-nav-icon>
       <v-toolbar-title>Dashboard</v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -131,6 +132,7 @@ export default {
         { title: 'My Profile' },
         { title: 'Settings' },
       ],
+      drawer: false
     }
   },
 
@@ -150,7 +152,32 @@ export default {
     navIconColor() {
       return '#7d74fd'
     },
-  },
+    
+		width() {
+			const screenWidth = this.$vuetify.breakpoint.width;
+
+			if (screenWidth < 600) {
+				console.log("Extra Small Screen");
+				return "extra-small";
+			}
+			if (screenWidth > 600 && screenWidth < 960) {
+				console.log("Small Screen");
+				return "small";
+			}
+			if (screenWidth > 960 && screenWidth < 1264) {
+				console.log("Medium Screen");
+				return "medium";
+			}
+			if (screenWidth > 1264 && screenWidth < 1904) {
+				console.log("Large Screen");
+				return "large";
+			}
+			if (screenWidth > 1904) {
+				console.log("Extra Large Screen");
+				return "extra-large";
+			}
+		},
+	},
 
   methods: {
     testIcon(navInd) {
@@ -159,6 +186,10 @@ export default {
       }
       return false
     },
+
+    onClickNavIcon() {
+      this.drawer = true
+    }
   },
 }
 </script>

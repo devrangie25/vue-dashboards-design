@@ -3,7 +3,7 @@
     <v-main>
       <v-card class="pa-6" height="100%" flat>
         <v-row>
-          <v-col cols="12" md="1" class="d-flex justify-center">
+          <v-col v-if="!['extra-small', 'small', 'medium'].includes(width)" cols="12" lg="1" class="d-flex justify-center">
             <v-card elevation="3" width="80" class="rounded-lg" height="100%">
               <v-navigation-drawer
                 floating
@@ -50,7 +50,7 @@
               </v-navigation-drawer>
             </v-card>
           </v-col>
-          <v-col cols="12" md="11">
+          <v-col cols="12" lg="11">
             <v-container fluid class="pa-0">
               <Nuxt />
             </v-container>
@@ -79,6 +79,33 @@ export default {
 
   beforeCreate(){
     this.$vuetify.theme.dark = true
-  }
+  },
+
+  computed: {
+		width() {
+			const screenWidth = this.$vuetify.breakpoint.width;
+
+			if (screenWidth < 600) {
+				console.log("Extra Small Screen");
+				return "extra-small";
+			}
+			if (screenWidth > 600 && screenWidth < 960) {
+				console.log("Small Screen");
+				return "small";
+			}
+			if (screenWidth > 960 && screenWidth < 1264) {
+				console.log("Medium Screen");
+				return "medium";
+			}
+			if (screenWidth > 1264 && screenWidth < 1904) {
+				console.log("Large Screen");
+				return "large";
+			}
+			if (screenWidth > 1904) {
+				console.log("Extra Large Screen");
+				return "extra-large";
+			}
+		},
+	},
 }
 </script>

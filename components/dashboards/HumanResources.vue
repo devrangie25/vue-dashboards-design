@@ -13,27 +13,27 @@
               >
                 <v-card-text>
                   <v-row>
-                    <v-col cols="12" md="6">
-                      <div class="headline white--text font-weight-bold">
-                        Hello Katie!
+                    <v-col :cols="width === 'extra-small' ? '6' : '12'" :sm="width === 'extra-small' ? false : '6'">
+                      <div :class="`${['extra-small', 'small'].includes(width) ? 'title' : 'headline'} white--text font-weight-bold`">
+                        Hello Rangie!
                       </div>
 
-                      <div class="body-1 white--text mt-4">
+                      <div :class="`body-${width === 'extra-small' ? '2' : '1'} white--text mt-4`">
                         You have 16 new applications. It is a lot of work for
                         today! So let's start.
                       </div>
 
                       <div class="review-it">
                         <NuxtLink
-                          to="/dashboard/human-resources"
-                          class="white--text"
+                          to="/"
+                          :class="`white--text body-${width === 'extra-small' ? '2' : '1'}`"
                         >
-                          review it!
+                          Review it!
                         </NuxtLink>
                       </div>
                     </v-col>
-                    <v-col cols="12" md="6" class="d-flex justify-end">
-                      <v-img src="/img/bighead.svg" height="160" contain />
+                    <v-col :cols="width === 'extra-small' ? '6' : '12'" :sm="width === 'extra-small' ? false : '6'" class="d-flex justify-end">
+                      <v-img src="/img/bighead.svg" :height="width === 'extra-small' ? '130' : '160'" contain />
                     </v-col>
                   </v-row>
                 </v-card-text>
@@ -46,14 +46,14 @@
               <div class="to-hire-title">You need to hire</div>
               <div>
                 <NuxtLink
-                  to="/dashboard/human-resources"
+                  to="/"
                   class="black--text text--secondary"
                 >
                   see all
                 </NuxtLink>
               </div>
             </v-col>
-            <v-col cols="12" md="6" v-for="(item, i) in 4" :key="i">
+            <v-col cols="12" sm="6" v-for="(item, i) in 4" :key="i">
               <v-card color="#fefefe" class="rounded-lg pa-1" flat>
                 <v-card-actions class="mx-4">
                   <div class="display-2 font-weight-bold mr-1">3</div>
@@ -192,7 +192,7 @@
                   >
                   <v-spacer></v-spacer>
                   <NuxtLink
-                    to="/dashboard/human-resources"
+                    to="/"
                     class="text--secondary"
                   >
                     see all
@@ -363,6 +363,31 @@ export default {
     getTodayDate() {
       return this.month[new Date().getMonth()] + ' ' + new Date().getFullYear()
     },
+
+    width() {
+			const screenWidth = this.$vuetify.breakpoint.width;
+
+			if (screenWidth < 600) {
+				console.log("Extra Small Screen");
+				return "extra-small";
+			}
+			if (screenWidth > 600 && screenWidth < 960) {
+				console.log("Small Screen");
+				return "small";
+			}
+			if (screenWidth > 960 && screenWidth < 1264) {
+				console.log("Medium Screen");
+				return "medium";
+			}
+			if (screenWidth > 1264 && screenWidth < 1904) {
+				console.log("Large Screen");
+				return "large";
+			}
+			if (screenWidth > 1904) {
+				console.log("Extra Large Screen");
+				return "extra-large";
+			}
+		},
   },
 
   methods: {
